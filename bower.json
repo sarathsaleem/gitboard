@@ -1,0 +1,17 @@
+{
+  "name": "Git dashboard",
+  "version": "0.0.0",
+  "description": "A dashboard viewer for Git dashboard",
+  "main": "src/index.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "git",
+    "dashboard"
+  ],
+  "authors": [
+    "Sarath Saleem"
+  ],
+  "license": "MIT"
+}

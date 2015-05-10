@@ -1,0 +1,23 @@
+{
+    "name": "Gitdashboard",
+    "version": "0.0.1",
+    "description": "A dashboard viewer for Git dashboard",
+    "main": "index.js",
+    "scripts": {
+        "test": "grunt test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "sarathsaleem.git.com/gitdashboard"
+    },
+    "keywords": [
+    "git"
+  ],
+    "author": "Sarath saleem",
+    "license": "BSD-2-Clause",
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+    
+}
