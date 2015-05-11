@@ -1,0 +1,268 @@
+[
+    {
+        "commit": "cba40a84d648e94a088f1cf71e7123ff88dcac05",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Oct 20 21:48:07 2014 +0400",
+        "message": "animation-exp"
+    },
+    {
+        "commit": "84f69c9699686b8d09fe4e5dcce3c9b029b7fd39",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Oct 14 18:25:12 2014 +0400",
+        "message": "Fixed-timeline"
+    },
+    {
+        "commit": "e61b0530a7a9eb05edac3321cb0dedc6537fbb45",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Sun Aug 24 22:41:51 2014 +0400",
+        "message": "Add-progress-bar"
+    },
+    {
+        "commit": "ce511708f8e1f1cb33b52fae4fb51a94d059fc89",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Aug 19 23:47:46 2014 +0400",
+        "message": "Update-timer-function"
+    },
+    {
+        "commit": "1286970292d8ea062b32190392d6862e9d3f683c",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Aug 18 23:45:55 2014 +0400",
+        "message": "G6-initial-commit"
+    },
+    {
+        "commit": "ca734432ebc42704c580245a160a3974760f7de2",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Aug 12 01:35:20 2014 +0400",
+        "message": "Added-share-btn-addthis"
+    },
+    {
+        "commit": "1cbdfe1f8d4140ef6a18d572f809046a7668bf23",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Wed Aug 6 23:38:49 2014 +0400",
+        "message": "Fix-thumbnail-path-og-image"
+    },
+    {
+        "commit": "3db2648a8ef89a26c1b24f3e3de1fad7a3bbfe81",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Wed Aug 6 23:35:36 2014 +0400",
+        "message": "Fix-g1-typo"
+    },
+    {
+        "commit": "78eb1fc23a57568582e7a5d36b89344d286f04db",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Wed Jul 23 22:17:09 2014 +0400",
+        "message": "Change-home-title"
+    },
+    {
+        "commit": "7de4394278cad309d88dbd97459024077d6a2d42",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 22 02:33:08 2014 +0400",
+        "message": "Add-webmaster-track"
+    },
+    {
+        "commit": "14be2b1cea934909e1aaf733da55316ce032b611",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 22 02:27:12 2014 +0400",
+        "message": "Add-ga-event-tracker-g5"
+    },
+    {
+        "commit": "c2547c6fe128e5a661ee2ace3567e57d6041f03c",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 22 02:15:54 2014 +0400",
+        "message": "Fix-typo-g5"
+    },
+    {
+        "commit": "06b3e899020a48670820e851fe47386d0cce8a15",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 22 02:13:25 2014 +0400",
+        "message": "Fix-typo-g5"
+    },
+    {
+        "commit": "b697e0b3e4a6dc1ef9ca86d43501b1339e9ce9cb",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 22 01:10:44 2014 +0400",
+        "message": "Fix-typo-g5"
+    },
+    {
+        "commit": "ec1958f2aab99a9fcbaaf5887246a97f5f3f3215",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Thu Jul 17 00:10:09 2014 +0400",
+        "message": "Howler-enable-buffer-sound"
+    },
+    {
+        "commit": "829a9e55a15544fe217b0b9682d3792a3afd08c0",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Wed Jul 16 23:28:11 2014 +0400",
+        "message": "Update-g5-image"
+    },
+    {
+        "commit": "e581bb74306f22052a184daf82e26c6fb98dbdbc",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 15 23:25:10 2014 +0400",
+        "message": "Build-g5"
+    },
+    {
+        "commit": "b3d0c6b4f7d3a107ba6bfc3c6447e149eac3b429",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 02:09:12 2014 +0400",
+        "message": "Regression-g5-credits"
+    },
+    {
+        "commit": "135484ef28eeab03fd1a0275757be6e5446dade7",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 02:07:31 2014 +0400",
+        "message": "Regression-g5-desc"
+    },
+    {
+        "commit": "29aa60f64caf2086db7fdc19b8226ef6b65ef702",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 02:04:32 2014 +0400",
+        "message": "Layout-fix-remove-right-sidebar"
+    },
+    {
+        "commit": "9c69fb2a51b365378f572345a34647889ea33acf",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 15 01:58:39 2014 +0400",
+        "message": "Fix-g5-time"
+    },
+    {
+        "commit": "c8b5048d055718c648a8d22d1ce195701b61a387",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 15 01:39:16 2014 +0400",
+        "message": "Fix-desc-g5"
+    },
+    {
+        "commit": "5435ba12e5f8e6e8658072f928afab7296f96685",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Tue Jul 15 01:31:54 2014 +0400",
+        "message": "Add-desc-g5"
+    },
+    {
+        "commit": "21745aaac36e32a06c60101f61c8397af172ad56",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 21:48:13 2014 +0400",
+        "message": "Integrate-Discuss-comments"
+    },
+    {
+        "commit": "391747fbd21c7e464adbf99166dbdf7ddf19efae",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 21:21:23 2014 +0400",
+        "message": "Add-sitemap"
+    },
+    {
+        "commit": "cc84c57e2a985c5b2174160284fa0cd6f9f5e69b",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 21:04:28 2014 +0400",
+        "message": "Fix-desc-typo"
+    },
+    {
+        "commit": "5bbe88812f8cd94d92d73daabd200937cae99e92",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 20:55:36 2014 +0400",
+        "message": "Use-Grunt-for-render-list-in-index"
+    },
+    {
+        "commit": "0c9d9b8d127a0b852c97bf59418519698312eccc",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jul 14 00:24:16 2014 +0400",
+        "message": "Added-timeline-bg-info"
+    },
+    {
+        "commit": "24c9248259991dea4c26dab5c4401f2214820e29",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Sun Jul 13 22:38:09 2014 +0400",
+        "message": "FIX-chrome-text-rendering-issue-update-fo"
+    },
+    {
+        "commit": "f9184322518561c686007cd5ed6137f794844f43",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jun 30 21:54:21 2014 +0400",
+        "message": "Change-g5-image"
+    },
+    {
+        "commit": "2fc488da4fb0f5ea4bc20b14c447eb20f056e404",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jun 30 21:53:34 2014 +0400",
+        "message": "Fix-meta-og-image"
+    },
+    {
+        "commit": "e7959aa1999441e1389298e3c14c44a05ec63c61",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jun 30 00:42:08 2014 +0400",
+        "message": "Meta-image-g5"
+    },
+    {
+        "commit": "0a578419b600dbf368fb71339adf926648e0cfbe",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jun 30 00:26:53 2014 +0400",
+        "message": "Merge-remote-tracking-branch-origin-gh-pa"
+    },
+    {
+        "commit": "ca4102d9c7169c00832e5eee6aeaf3b94e07fa1c",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jun 30 00:15:45 2014+0400",
+        "message": "Add-g5-og-meta"
+    },
+    {
+        "commit": "faa680f081340d28dd9a5def138c3f4e87f9acd6",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jun 30 00:15:45 2014 +0400",
+        "message": "Add-g5-og-meta"
+    },
+    {
+        "commit": "71f3477e6cba47deafeb3f72a9f7578c70754cdf",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Mon Jun 30 00:11:14 2014 +0400",
+        "message": "add-og-meta"
+    },
+    {
+        "commit": "692b92aef7fdda5b5d8592f3b461b2bcd9a562f2",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Wed Jun 25 23:34:08 2014 +0400",
+        "message": "Fix-images-display"
+    },
+    {
+        "commit": "9c3883a1559954d47415276190cd9f010b5b9c48",
+        "author": "sarathsaleem",
+        "author_email": "sarathsaleem@gmail.com",
+        "date": "Wed Jun 25 10:27:19 2014 +0400",
+        "message": "Clean-g5-added-thumbnail-images"
+    }
+]
