@@ -20,7 +20,16 @@ body {
 .area {
   fill: #B5961C;
 }
+.area {
+  clip-path: url(#clip);
+}
 
 .zoom text {
-    fill: #00ff9d;
+    fill: #FFF;
+    font-size: 20px;
+}
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
 }

@@ -8,10 +8,13 @@ GitDasboard.ele = {};
 
 GitDasboard.getData = function () {
     $.getJSON('data/gitlog.json', function (data) {
-        GitDasboard.drawAreaChart(data, GitDasboard.ele.areaChart);
+        
+        var areaData = data.slice(0);
+            
+        GitDasboard.drawAreaChart(areaData, GitDasboard.ele.areaChart);
         GitDasboard.drawScatterplot(data, GitDasboard.ele.scatterPlot);
-       GitDasboard.drawPieChart(data, GitDasboard.ele.pieChart);
-        GitDasboard.drawTreeMap(data, GitDasboard.ele.treeMap);
+        GitDasboard.drawPieChart(data.slice(0), GitDasboard.ele.pieChart);
+        GitDasboard.drawTreeMap(data.slice(0), GitDasboard.ele.treeMap);
 
     });
 };
@@ -25,31 +28,70 @@ GitDasboard.drawAreaChart = function (data, ele) {
         height = canvasHeight - 2 * margin;
 
 
-    data.sort(function(a,b){
-      return new Date(b.date) - new Date(a.date);
+    data.sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date);
     });
+    
+    var prevDate, val;
+    
+   // var dataMap = d3.time.days(new Date(data[0].date), new Date(data[data.length-1].date));
+    
+   //TODO: filter date with day map
 
-    data.forEach(function (d, i) {
+    data = data.filter(function (d, i) {
         d.date = new Date(d.date);
-        d.index = data.length - i;
+        if (d.date.getDate() === prevDate) {
+            val += 1;  
+        } else {
+            val = 1;
+        }       
+        d.index = val; 
+        prevDate = d.date.getDate();
+        
+        if (data[i+1] && data[i+1].date) {
+            var nextD = new Date(data[i+1].date);
+            if(nextD.getDate() === d.date.getDate()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
     });
+    
+    var margin = {
+            top: 10,
+            right: 10,
+            bottom: 100,
+            left: 40
+        },
+        margin2 = {
+            top: 430,
+            right: 10,
+            bottom: 20,
+            left: 40
+        },
+        width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom,
+        height2 = 500 - margin2.top - margin2.bottom;
 
+    var parseDate = d3.time.format("%b %Y").parse;
 
-    var x = d3.time.scale()
-        .range([0, width]);
+    var x = d3.time.scale().range([0, width]),
+        x2 = d3.time.scale().range([0, width]),
+        y = d3.scale.linear().range([height, 0]),
+        y2 = d3.scale.linear().range([height2, 0]);
 
-    var y = d3.scale.linear()
-        .range([height, 0]);
+    var xAxis = d3.svg.axis().scale(x).orient("bottom"),
+        xAxis2 = d3.svg.axis().scale(x2).orient("bottom"),
+        yAxis = d3.svg.axis().scale(y).orient("left");
 
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left");
+    var brush = d3.svg.brush()
+        .x(x2)
+        .on("brush", brushed);
 
     var area = d3.svg.area()
+        .interpolate("monotone")
         .x(function (d) {
             return x(d.date);
         })
@@ -57,32 +99,80 @@ GitDasboard.drawAreaChart = function (data, ele) {
         .y1(function (d) {
             return y(d.index);
         });
-    x.domain(d3.extent(data, function (d) {
-        return d.date;
-    }));
-    y.domain([0, d3.max(data, function (d) {
-        return d.index;
-    })]);
+
+    var area2 = d3.svg.area()
+        .interpolate("monotone")
+        .x(function (d) {
+            return x2(d.date);
+        })
+        .y0(height2)
+        .y1(function (d) {
+            return y2(d.index);
+        });
 
     var svg = d3.select(ele).append("svg")
-        .attr("width", canvasWidth)
-        .attr("height", canvasHeight)
-        .append("g")
-        .attr("transform", "translate(" + margin + "," + margin + ")");
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
 
-    svg.append("path")
+    svg.append("defs").append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr("width", width)
+        .attr("height", height);
+
+    var focus = svg.append("g")
+        .attr("class", "focus")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var context = svg.append("g")
+        .attr("class", "context")
+        .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+    x.domain(d3.extent(data.map(function (d) {
+        return d.date;
+    })));
+    y.domain([0, d3.max(data.map(function (d) {
+        return d.index;
+    }))]);
+    x2.domain(x.domain());
+    y2.domain(y.domain());
+
+    focus.append("path")
         .datum(data)
         .attr("class", "area")
         .attr("d", area);
 
-    svg.append("g")
+    focus.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
-    svg.append("g")
+    focus.append("g")
         .attr("class", "y axis")
         .call(yAxis);
+
+    context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", area2);
+
+    context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(xAxis2);
+
+    context.append("g")
+        .attr("class", "x brush")
+        .call(brush)
+        .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    function brushed() {
+        x.domain(brush.empty() ? x2.domain() : brush.extent());
+        focus.select(".area").attr("d", area);
+        focus.select(".x.axis").call(xAxis);
+    }
 
 
 };
@@ -101,8 +191,7 @@ GitDasboard.drawScatterplot = function (data, ele) {
 
     data.forEach(function (d, i) {
         d.date = new Date(d.date);
-        d.index = data.length - i;
-
+        
         if (users.indexOf(d.author_email) == -1) {
             users.push(d.author_email);
         }
@@ -114,7 +203,7 @@ GitDasboard.drawScatterplot = function (data, ele) {
         .range([10, width]);
 
     var y = d3.scale.linear()
-        .range([height-10, 0]);
+        .range([height - 10, 0]);
 
     x.domain(d3.extent(data, function (d) {
         return d.date;
@@ -227,8 +316,8 @@ GitDasboard.drawPieChart = function (data, ele) {
         }
     });
 
-    users.sort(function(a,b){
-       return commitsNumber[b] - commitsNumber[a];
+    users.sort(function (a, b) {
+        return commitsNumber[b] - commitsNumber[a];
     });
 
     var arc = d3.svg.arc()
@@ -282,12 +371,15 @@ GitDasboard.drawPieChart = function (data, ele) {
 
 GitDasboard.drawTreeMap = function (data, ele) {
 
-    var parent = { name : "Year" , children : [] };
+    var parent = {
+        name: "Year",
+        children: []
+    };
 
-    function isInChildren(arrayOfObj, key , val) {
+    function isInChildren(arrayOfObj, key, val) {
         var isFound = null;
         arrayOfObj.forEach(function (obj, index) {
-            if(obj[key] === val) {
+            if (obj[key] === val) {
                 isFound = index;
             }
         });
@@ -304,14 +396,14 @@ GitDasboard.drawTreeMap = function (data, ele) {
             day = d.date.getDate(),
             hours = d.date.getHours();
 
-        var isYear = isInChildren(parent.children, 'name' , year);
+        var isYear = isInChildren(parent.children, 'name', year);
 
         if (isYear !== null) {
-            var monthindex = isInChildren(parent.children[isYear].children, 'name' , month_names[month]);
+            var monthindex = isInChildren(parent.children[isYear].children, 'name', month_names[month]);
 
             if (monthindex !== null) {
 
-                var dayIndex = isInChildren(parent.children[isYear].children[monthindex].children, 'name' , day);
+                var dayIndex = isInChildren(parent.children[isYear].children[monthindex].children, 'name', day);
 
                 if (dayIndex !== null) {
 
@@ -319,15 +411,24 @@ GitDasboard.drawTreeMap = function (data, ele) {
 
                 } else {
 
-                    parent.children[isYear].children[monthindex].children.push( { name : day , size : 1 });
+                    parent.children[isYear].children[monthindex].children.push({
+                        name: day,
+                        size: 1
+                    });
                 }
 
             } else {
-                parent.children[isYear].children.push({name : month_names[month], children : [] });
+                parent.children[isYear].children.push({
+                    name: month_names[month],
+                    children: []
+                });
             }
 
         } else {
-            parent.children.push({ name : year, children : [] });
+            parent.children.push({
+                name: year,
+                children: []
+            });
         }
     });
 
@@ -351,71 +452,102 @@ GitDasboard.drawTreeMap = function (data, ele) {
 
 
     var color = d3.scale.linear()
-    .domain([-1, 5])
-    .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
-    .interpolate(d3.interpolateHcl);
+        .domain([-1, 5])
+        .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+        .interpolate(d3.interpolateHcl);
 
     var pack = d3.layout.pack()
         .padding(2)
         .size([diameter - margin, diameter - margin])
-        .value(function(d) { return d.size; })
+        .value(function (d) {
+            return d.size;
+        })
 
     var svg = d3.select(ele).append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
-      .append("g")
+        .append("g")
         .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
 
     var focus = parent,
-      nodes = pack.nodes(parent),
-      view;
+        nodes = pack.nodes(parent),
+        view;
 
-  var circle = svg.selectAll("circle")
-      .data(nodes)
-    .enter().append("circle")
-      .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
-      .style("fill", function(d) { return d.children ? color(d.depth) : null; })
-      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
-
-  var text = svg.selectAll("text")
-      .data(nodes)
-    .enter().append("text")
-      .attr("class", "label")
-      .style("fill-opacity", function(d) { return d.parent === parent ? 1 : 0; })
-      .style("display", function(d) { return d.parent === parent ? null : "none"; })
-      .text(function(d) { return d.name; });
-
-  var node = svg.selectAll("circle,text");
-
-  d3.select("body")
-      .style("background", color(-1))
-      .on("click", function() { zoom(parent); });
-
-  zoomTo([parent.x, parent.y, parent.r * 2 + margin]);
-
-  function zoom(d) {
-    var focus0 = focus; focus = d;
-
-    var transition = d3.transition()
-        .duration(d3.event.altKey ? 7500 : 750)
-        .tween("zoom", function(d) {
-          var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
-          return function(t) { zoomTo(i(t)); };
+    var circle = svg.selectAll("circle")
+        .data(nodes)
+        .enter().append("circle")
+        .attr("class", function (d) {
+            return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root";
+        })
+        .style("fill", function (d) {
+            return d.children ? color(d.depth) : null;
+        })
+        .on("click", function (d) {
+            if (focus !== d) zoom(d), d3.event.stopPropagation();
         });
 
-    transition.selectAll("text")
-      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-        .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
-        .each("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
-        .each("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
-  }
+    var text = svg.selectAll("text")
+        .data(nodes)
+        .enter().append("text")
+        .attr("class", "label")
+        .style("fill-opacity", function (d) {
+            return d.parent === parent ? 1 : 0;
+        })
+        .style("display", function (d) {
+            return d.parent === parent ? null : "none";
+        })
+        .text(function (d) {
+            return d.name;
+        });
 
-  function zoomTo(v) {
-    var k = diameter / v[2]; view = v;
-    node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
-    circle.attr("r", function(d) { return d.r * k; });
-  }
+    var node = svg.selectAll("circle,text");
+
+    d3.select("body")
+        .on("click", function () {
+            zoom(parent);
+        });
+
+    zoomTo([parent.x, parent.y, parent.r * 2 + margin]);
+
+    function zoom(d) {
+        var focus0 = focus;
+        focus = d;
+
+        var transition = d3.transition()
+            .duration(d3.event.altKey ? 7500 : 750)
+            .tween("zoom", function (d) {
+                var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+                return function (t) {
+                    zoomTo(i(t));
+                };
+            });
+
+        transition.selectAll("text")
+            .filter(function (d) {
+                return d.parent === focus || this.style.display === "inline";
+            })
+            .style("fill-opacity", function (d) {
+                return d.parent === focus ? 1 : 0;
+            })
+            .each("start", function (d) {
+                if (d.parent === focus) this.style.display = "inline";
+            })
+            .each("end", function (d) {
+                if (d.parent !== focus) this.style.display = "none";
+            });
+    }
+
+    function zoomTo(v) {
+        var k = diameter / v[2];
+        view = v;
+        node.attr("transform", function (d) {
+            return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
+        });
+        circle.attr("r", function (d) {
+            return d.r * k;
+        });
+    }
 
 };
 
