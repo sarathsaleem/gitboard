@@ -8,9 +8,9 @@ GitDasboard.ele = {};
 
 GitDasboard.getData = function () {
     $.getJSON('data/gitlog.json', function (data) {
-        //GitDasboard.drawAreaChart(data, GitDasboard.ele.areaChart);
-        //GitDasboard.drawScatterplot(data, GitDasboard.ele.scatterPlot);
-       // GitDasboard.drawPieChart(data, GitDasboard.ele.pieChart);
+        GitDasboard.drawAreaChart(data, GitDasboard.ele.areaChart);
+        GitDasboard.drawScatterplot(data, GitDasboard.ele.scatterPlot);
+       GitDasboard.drawPieChart(data, GitDasboard.ele.pieChart);
         GitDasboard.drawTreeMap(data, GitDasboard.ele.treeMap);
 
     });
@@ -24,13 +24,13 @@ GitDasboard.drawAreaChart = function (data, ele) {
         width = canvasWidth - 2 * margin,
         height = canvasHeight - 2 * margin;
 
-    
+
     data.sort(function(a,b){
       return new Date(b.date) - new Date(a.date);
     });
-    
+
     data.forEach(function (d, i) {
-        d.date = new Date(d.date); 
+        d.date = new Date(d.date);
         d.index = data.length - i;
     });
 
@@ -226,7 +226,7 @@ GitDasboard.drawPieChart = function (data, ele) {
             commitsNumber[d.author_email] = 1;
         }
     });
-    
+
     users.sort(function(a,b){
        return commitsNumber[b] - commitsNumber[a];
     });
@@ -281,9 +281,9 @@ GitDasboard.drawPieChart = function (data, ele) {
 
 
 GitDasboard.drawTreeMap = function (data, ele) {
-    
-    var parent = {};
-    
+
+    var parent = { name : "Year" , children : [] };
+
     function isInChildren(arrayOfObj, key , val) {
         var isFound = null;
         arrayOfObj.forEach(function (obj, index) {
@@ -293,62 +293,63 @@ GitDasboard.drawTreeMap = function (data, ele) {
         });
         return isFound;
     }
-    
+
     var month_names = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
-    data.forEach(function (d) {    
+
+    data.forEach(function (d) {
         d.date = new Date(d.date);
-        
+
         var year = d.date.getFullYear(),
             month = d.date.getMonth(),
             day = d.date.getDate(),
             hours = d.date.getHours();
-        
-        if (parent[year]) {            
-            var monthindex = isInChildren(parent[year].children, 'name' , month_names[month]);
-            
+
+        var isYear = isInChildren(parent.children, 'name' , year);
+
+        if (isYear !== null) {
+            var monthindex = isInChildren(parent.children[isYear].children, 'name' , month_names[month]);
+
             if (monthindex !== null) {
-                
-                var dayIndex = isInChildren(parent[year].children[monthindex].children, 'name' , day);
-                
+
+                var dayIndex = isInChildren(parent.children[isYear].children[monthindex].children, 'name' , day);
+
                 if (dayIndex !== null) {
-                    
-                    parent[year].children[monthindex].children[dayIndex].size += 1;
-                    
+
+                    parent.children[isYear].children[monthindex].children[dayIndex].size += 1;
+
                 } else {
-                    
-                    parent[year].children[monthindex].children.push( { name : day , size : 1 });
+
+                    parent.children[isYear].children[monthindex].children.push( { name : day , size : 1 });
                 }
-                
-                
-            } else {                
-                parent[year].children.push({name : month_names[month], children : [] }); 
-            }       
-            
+
+            } else {
+                parent.children[isYear].children.push({name : month_names[month], children : [] });
+            }
+
         } else {
-            parent[year] = { name : year, children : [] };
+            parent.children.push({ name : year, children : [] });
         }
     });
-    
+
     console.log(parent);
-    
+
     /*
-    
+
     {
      name : 2010,
      children : [
-     
+
        { name : 0, children : [ {},{},{},{}]},
        {}
-     
+
      ]
     }
     */
-    
+
     var diameter = 900,
         margin = 30;
-    
-    
+
+
     var color = d3.scale.linear()
     .domain([-1, 5])
     .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
@@ -364,8 +365,8 @@ GitDasboard.drawTreeMap = function (data, ele) {
         .attr("height", diameter)
       .append("g")
         .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
-    
-    
+
+
     var focus = parent,
       nodes = pack.nodes(parent),
       view;

@@ -20,3 +20,7 @@ body {
 .area {
   fill: #B5961C;
 }
+
+.zoom text {
+    fill: #00ff9d;
+}
