@@ -1,0 +1,35 @@
+body {
+  font: 10px monospace;
+}
+
+.dashboard {
+    background-color: #EFF5D6;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #9ECAA0;
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.area {
+  fill: #B5961C;
+}
+.area {
+  clip-path: url(#clip);
+}
+
+.zoom text {
+    fill: #FFF;
+    font-size: 20px;
+}
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
