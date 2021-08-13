@@ -1,7 +1,9 @@
 body {
   font: 10px monospace;
 }
-
+h1{
+  margin:20px;
+}
 .dashboard {
     background-color: #EFF5D6;
     padding: 20px;
